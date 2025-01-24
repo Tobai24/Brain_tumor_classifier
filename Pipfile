@@ -9,6 +9,8 @@ torch = "*"
 torchvision = "*"
 torchaudio = "*"
 kagglehub = "*"
+jupyter = "*"
+ipywidgets = "*"
 
 [dev-packages]
 
