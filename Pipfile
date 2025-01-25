@@ -11,6 +11,7 @@ torchaudio = "*"
 kagglehub = "*"
 jupyter = "*"
 ipywidgets = "*"
+scikit-learn = "*"
 
 [dev-packages]
 
