@@ -12,6 +12,7 @@ kagglehub = "*"
 jupyter = "*"
 ipywidgets = "*"
 scikit-learn = "*"
+uvicorn = "*"
 
 [dev-packages]
 

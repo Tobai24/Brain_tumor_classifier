@@ -42,8 +42,8 @@ To bring this project to life, I used:
 #### **Clone the Repository**:
 
 ```bash
-git clone https://github.com/Tobai24/ECG-Arrhythmia-Classifier.git
-cd ECG-Arrhythmia-Classifier
+git clone https://github.com/Tobai24/Brain_tumor_classifier.git
+cd  Brain_tumor_classifier
 ```
 
 #### **Set Up the Python Environment**:
