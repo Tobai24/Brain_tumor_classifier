@@ -26,6 +26,7 @@ preprocess = transforms.Compose([
     transforms.Normalize(mean=[0.1855, 0.1856, 0.1856], std=[0.2003, 0.2003, 0.2003])
 ])
 
+
 # Define the prediction function
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
@@ -50,9 +51,12 @@ async def predict(file: UploadFile = File(...)):
     
     # Get the predicted class (assuming softmax or similar)
     _, predicted_class = torch.max(probabilities, 1)
+    
+    class_mapping = {0: 'glioma', 1: 'meningioma', 2: 'notumor', 3: 'pituitary'}
+    pred = class_mapping[predicted_class]
 
     # Return the prediction
-    return {"prediction": predicted_class.item(), "probabilities": probabilities.cpu().numpy().tolist()}
+    return {"prediction": pred, "probabilities": probabilities.cpu().numpy().tolist()}
 
 # Run the app if executed directly
 if __name__ == "__main__":

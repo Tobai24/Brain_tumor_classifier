@@ -1,7 +1,5 @@
 # Brain_tumor_classifier 🧠
 
-### Classifying Brain Tumors from MRI Images
-
 Hello! 👋 Welcome to my deep learning project, where I'm building a model to classify brain tumors using MRI images. This project delves into how artificial intelligence can assist in identifying different types of brain tumors with high accuracy, helping healthcare professionals in diagnosing and treating patients faster and more effectively.
 
 The entire pipeline is designed to be reproducible and scalable, so you can easily follow along and replicate the results on your local machine or in the cloud. The goal is to help doctors and radiologists make quicker, more informed decisions, ultimately improving patient care and outcomes.
@@ -32,7 +30,7 @@ Ready to dive into the world of AI and healthcare? Let’s get started and see h
 To bring this project to life, I used:
 
 - **Containerization:** Docker and Docker Compose
-- **Web Application Framework (Local Deployment):** Flask (for local web deployment)
+- **Web Application Framework (Local Deployment):** FastAPI (for local web deployment)
 - **Web Application Framework (Cloud Deployment):** Streamlit (for cloud-based web deployment)
 
 ## ✨ Setup
@@ -96,7 +94,7 @@ cd  Brain_tumor_classifier
 
 ## Exploratory Data Analysis and Modeling
 
-The exploratory data analysis and modeling are done in the [notebooks directory](notebooks/). The exploratory data analysis and model building are done in the `notebook.ipynb` notebook.
+The exploratory data analysis and modeling are done in the [notebooks directory](notebook/). The exploratory data analysis and model building are done in the `notebook.ipynb` notebook.
 
 The notebook directory also contains the model called `model.pkl`, where the model from the `notebook.ipynb` is stored.
 
@@ -114,8 +112,8 @@ Ready to dive into your project? Here’s a quick guide to get you started.
 
 ### **Local Deployment**
 
-- **Tools Used**: Flask for building your web app and Docker for containerizing it.
-- **Where to Find It**: Head over to the [deployment/local_deployment](deployment/local_deployment) folder.
+- **Tools Used**: FastAPI for building your web app and Docker for containerizing it.
+- **Where to Find It**: Head over to the [deployment/fastapi](deployment/fastapi) folder.
 
 The README in that folder covers everything you need to get your app running locally.
 
