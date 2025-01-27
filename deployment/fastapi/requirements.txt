@@ -1,7 +1,5 @@
-numpy
-scikit-learn
-flask
-gunicorn
 torch
+torchvision
 fastapi
 uvicorn
+Pillow

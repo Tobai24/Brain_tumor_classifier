@@ -15,7 +15,7 @@ class ConvertImage:
         return img   
 
 # Load the pre-trained PyTorch model
-model = torch.load("des_model.pth")
+model = torch.load("self_model.pth")
 model.eval()
 
 # Define the image preprocessing pipeline
