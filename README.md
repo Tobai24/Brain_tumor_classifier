@@ -32,6 +32,16 @@ The dataset used in this project consists of **7,023 labeled MRI images** of hum
 
 For more details about the dataset, refer to the [data folder](./data/README.md).
 
+## 🎉 Live Streamlit App
+
+You can check out the live version of the Streamlit app at the following URL:
+
+[Streamlit App](https://tobai24-brain-tumor-classifi-deploymentweb-deploymentapp-xzi8bs.streamlit.app/)
+
+### 📸 Screenshot of the App
+
+![Streamlit App Screenshot](images/image.png)
+
 ## 🔧 **Tools & Technologies**
 
 This project utilizes the following tools and technologies:
@@ -124,7 +134,3 @@ The exploratory data analysis (EDA), data preprocessing, and model development a
 ## 🎉 **Acknowledgments**
 
 A special thanks to **[DataTalks.Club](https://datatalks.club)** for their free **Machine Learning Zoomcamp** course. The knowledge and skills gained from this course were instrumental in the development of this project. If you're interested in learning more about machine learning, I highly recommend checking out their [course](https://github.com/DataTalksClub/machine-learning-zoomcamp).
-
-## 🌟 **Get Started**
-
-Ready to dive in? Follow the setup instructions above to get the project running on your local machine or deploy it to the cloud. Together, let’s harness the power of AI to improve healthcare outcomes! 🚀
