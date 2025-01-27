@@ -1,0 +1,9 @@
+fastapi
+torch
+torchvision
+torchaudio
+kagglehub
+jupyter
+ipywidgets
+scikit-learn
+uvicorn
