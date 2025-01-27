@@ -40,7 +40,7 @@ You can check out the live version of the Streamlit app at the following URL:
 
 ### 📸 Screenshot of the App
 
-![Streamlit App Screenshot](images/image.png)
+![Streamlit App Screenshot](Images/image.png)
 
 ## 🔧 **Tools & Technologies**
 
