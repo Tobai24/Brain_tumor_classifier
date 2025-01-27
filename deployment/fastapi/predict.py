@@ -47,7 +47,7 @@ class CustomCNN(nn.Module):
         return self.model(x)
 
 # Load the checkpoint
-checkpoint = torch.load("self_model.pth", map_location=torch.device('cpu'))
+checkpoint = torch.load("self_model.pth", map_location=torch.device('cpu'), weights_only=True)
 
 # Add the "model." prefix to the keys in the state_dict
 new_state_dict = OrderedDict()
@@ -89,14 +89,17 @@ async def predict(file: UploadFile = File(...)):
             
         probabilities = torch.nn.functional.softmax(output, dim=1)
         
-        # Get the predicted class
-        _, predicted_class = torch.max(probabilities, 1)
+        # Get the predicted class and the highest probability
+        max_prob, predicted_class = torch.max(probabilities, 1)
+        max_prob = max_prob.item()  # Convert to Python float
         
-        class_mapping = {0: 'glioma', 1: 'meningioma', 2: 'notumor', 3: 'pituitary'}
+        class_mapping = {0: 'glioma', 1: 'meningioma', 2: 'normal brain MRI', 3: 'pituitary'}
         pred = class_mapping[predicted_class.item()]
 
-        # Return the prediction
-        return {"prediction": pred, "probabilities": probabilities.cpu().numpy().tolist()}
+        # Return the prediction and the highest probability
+        return{
+            "message": f"The model predicts that the image shows a {pred} with a confidence of {max_prob * 100:.2f}%."
+        }
 
     except Exception as e:
         return {"error": str(e)}
