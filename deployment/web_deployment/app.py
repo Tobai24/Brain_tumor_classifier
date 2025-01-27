@@ -98,7 +98,7 @@ class CustomCNN(nn.Module):
         return self.model(x)
 
 # Load the model checkpoint
-checkpoint = torch.load("deployment/web_deployment/self_model.pth", map_location=torch.device("cpu"), weights_only=True)
+checkpoint = torch.load("self_model.pth", map_location=torch.device("cpu"), weights_only=True)
 new_state_dict = OrderedDict(
     {"model." + key: value for key, value in checkpoint["model_state_dict"].items()}
 )

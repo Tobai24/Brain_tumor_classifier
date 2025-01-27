@@ -17,7 +17,7 @@ The primary objective of this project is to develop a **deep learning model** ca
 3. **Pituitary**
 4. **No Tumor**
 
-The model is trained on a curated dataset of MRI images and aims to provide a reliable, automated solution for tumor classification. This tool can assist radiologists and doctors in making faster, more informed decisions, thereby enhancing patient care.
+The model is trained on a curated dataset of MRI images and aims to provide a reliable, automated solution for tumor classification. This tool can assist radiologists and doctors in making faster thereby enhancing patient care.
 
 ## 📊 **Dataset**
 
@@ -30,7 +30,7 @@ The dataset used in this project consists of **7,023 labeled MRI images** of hum
 - **Pituitary**: Tumors located in the pituitary gland.
 - **No Tumor**: Healthy brain scans with no abnormalities.
 
-For more details about the dataset, refer to the [data folder](./data/README.md).
+For more details about the dataset and step on how to download it, refer to the [data folder](./data/README.md).
 
 ## 🎉 Live Streamlit App
 
@@ -50,7 +50,7 @@ This project utilizes the following tools and technologies:
 - **Web Application Frameworks**:
   - **FastAPI** (for local deployment)
   - **Streamlit** (for cloud deployment)
-- **Containerization**: Docker and Docker Compose
+- **Containerization**: Docker
 - **Model Training & Evaluation**: Scikit-learn, Torchvision
 
 ## ✨ **Setup**
@@ -105,10 +105,10 @@ cd Brain_tumor_classifier
 
 ## 🚀 **Exploratory Data Analysis and Modeling**
 
-The exploratory data analysis (EDA), data preprocessing, and model development are documented in the [notebooks directory](./notebook/). Key files include:
+The exploratory data analysis (EDA), data preprocessing, and model development are documented in the [notebook directory](./notebook/). Key files include:
 
 - **`notebook.ipynb`**: A Jupyter notebook containing the EDA, data preprocessing, model training, and evaluation.
-- **`models/`**: A folder containing the top 3 trained models saved as `.pth` files.
+- **`models/`**: A folder containing the top 2 trained models saved as `.pth` files.
 - **`performance/`**: A folder with CSV files detailing the performance metrics for each of the top models.
 - **`train.py`**: A Python script for training the best-performing model. Run it using:
   ```bash
@@ -128,8 +128,6 @@ The exploratory data analysis (EDA), data preprocessing, and model development a
 - **Tools**: Streamlit (for the web interface) and Streamlit Community Cloud (for hosting).
 - **Location**: Navigate to the [deployment/web_deployment](./deployment/web_deployment) folder.
 - **Instructions**: Follow the README in the folder to deploy the app on the cloud.
-
----
 
 ## 🎉 **Acknowledgments**
 

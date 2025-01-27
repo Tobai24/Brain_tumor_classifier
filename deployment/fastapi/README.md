@@ -43,7 +43,7 @@ This command will start the container and expose it on port `8080`. You can acce
 
 ### **Use the FastAPI App for Predictions:**
 
-To use the Flask app for predictions, you need to run `test.py`.
+To use the FastAPI app for predictions, you need to run `test.py`.
 
 ```python
 python test.py

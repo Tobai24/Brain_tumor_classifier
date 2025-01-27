@@ -1,0 +1,22 @@
+name: CI/CD practice
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-docker-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t my-app:latest ./deployment/fastapi
+
+      - name: Test Docker image
+        run: |
+          docker run --rm my-app:latest

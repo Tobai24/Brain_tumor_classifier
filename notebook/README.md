@@ -19,7 +19,7 @@ This Python script automates the training process for the best-performing model.
 
 - Loads the preprocessed dataset.
 - Trains the model using the best hyperparameters.
-- Saves the trained model to the `best_models/` folder.
+- Saves the trained model to the `models/` folder.
 
 Run the script using:
 
@@ -29,7 +29,7 @@ python train.py
 
 ### **`models/`**
 
-This folder contains the top 3 trained models saved as `.pth` files. These models are selected based on their performance on the validation set.
+This folder contains the top 2 trained models saved as `.pth` files. These models are selected based on their performance on the validation set.
 
 ### **`performance/`**
 
