@@ -1,17 +1,18 @@
 import streamlit as st
-import requests
+import torch
+from torchvision import transforms
 from PIL import Image
 import io
+import torch.nn as nn
+from collections import OrderedDict
 
-
+# Initialize the Streamlit app
 st.set_page_config(
-    page_title="Brain Tumor Classifer 🧠",
+    page_title="Brain Tumor Classifier 🧠",
     page_icon="🧠",
     layout="centered",
 )
 
-
-# Title of the Streamlit app
 st.title("Brain Tumor Classifier 🧠")
 
 st.markdown(
@@ -19,7 +20,6 @@ st.markdown(
     <style>
         @import url("https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap");
 
-        /* Apply font globally */
         html, body, [class*="css"] {
             font-family: "LXGW WenKai TC", serif;
             background-color: #f0f4f7;
@@ -45,61 +45,100 @@ st.markdown(
             padding: 30px;
             border-radius: 10px;
             text-align: center;
-            margin:20px auto;
+            margin: 20px auto;
             font-family: "LXGW WenKai TC", serif;
         }
         .stFileUploader:hover {
             border-color: #e91e63;
         }
-        .stSpinner {
-            color: #ff4081;
-            font-size: 18px;
-        }
-        .stText, .stWrite, p, h2, h3, h4, h5, h6, li, span {
-            font-size: 18px;
-            line-height: 2;
-            font-family: "LXGW WenKai TC", serif;
-        }
-        h1 {
-            line-height: 2;
-            font-family: "LXGW WenKai TC", serif;
-            margin: 0px;
-            padding: 0px;
-        }
     </style>
-    """, unsafe_allow_html=True
+    """,
+    unsafe_allow_html=True,
 )
 
-# Description
-st.write("""
-Upload an MRI image of the brain, and the model will predict whether it shows a **Glioma**, **Meningioma**, **Pituitary Tumor**, or a **normal brain MRI**.
-""")
+st.write(
+    """
+    Upload an MRI image of the brain, and the model will predict whether it shows a **Glioma**, **Meningioma**, **Pituitary Tumor**, or a **normal brain MRI**.
+    """
+)
 
 # File uploader for the image
 uploaded_file = st.file_uploader("Upload a Brain MRI image...", type=["jpg", "jpeg", "png"])
 
-# FastAPI endpoint URL
-FASTAPI_URL = "http://127.0.0.1:8000/predict"
+# Define the custom image preprocessing class
+class ConvertImage:
+    def __call__(self, img):
+        if img.mode != "RGB":
+            img = img.convert("RGB")
+        return img
 
-# If an image is uploaded
+# Define the custom CNN model
+class CustomCNN(nn.Module):
+    def __init__(self):
+        super(CustomCNN, self).__init__()
+        self.model = nn.Sequential(
+            nn.Conv2d(3, 64, 3, 1, 1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+            nn.Conv2d(64, 32, 3, 1, 1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+            nn.Conv2d(32, 16, 3, 1, 1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+            nn.Flatten(),
+            nn.Linear(16 * 28 * 28, 64),
+            nn.ReLU(),
+            nn.Linear(64, 32),
+            nn.ReLU(),
+            nn.Linear(32, 4),
+        )
+
+    def forward(self, x):
+        return self.model(x)
+
+# Load the model checkpoint
+checkpoint = torch.load("self_model.pth", map_location=torch.device("cpu"), weights_only=True)
+new_state_dict = OrderedDict(
+    {"model." + key: value for key, value in checkpoint["model_state_dict"].items()}
+)
+
+# Initialize the model
+model = CustomCNN()
+model.load_state_dict(new_state_dict)
+model.eval()
+
+# Preprocessing pipeline
+preprocess = transforms.Compose([
+    ConvertImage(),
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.1855, 0.1856, 0.1856], std=[0.2003, 0.2003, 0.2003]),
+])
+
+# Process and predict if a file is uploaded
 if uploaded_file is not None:
     # Display the uploaded image
     image = Image.open(uploaded_file)
     st.image(image, caption="Uploaded MRI Image", use_container_width=True)
 
-    # Convert the image to bytes
-    image_bytes = io.BytesIO()
-    image.save(image_bytes, format="PNG")
-    image_bytes = image_bytes.getvalue()
-
-    # Make a POST request to the FastAPI /predict endpoint
     with st.spinner("Analyzing the image..."):
         try:
-            response = requests.post(FASTAPI_URL, files={"file": image_bytes})
-            if response.status_code == 200:
-                result = response.json()
-                st.success(result["message"])
-            else:
-                st.error(f"Error: {response.json().get('error', 'Unknown error')}")
+            # Preprocess the image
+            input_tensor = preprocess(image).unsqueeze(0)
+            # Predict
+            with torch.no_grad():
+                output = model(input_tensor)
+                probabilities = torch.nn.functional.softmax(output, dim=1)
+                max_prob, predicted_class = torch.max(probabilities, 1)
+
+            # Class mapping
+            class_mapping = {0: "Glioma", 1: "Meningioma", 2: "Normal brain MRI", 3: "Pituitary Tumor"}
+            prediction = class_mapping[predicted_class.item()]
+            confidence = max_prob.item() * 100
+
+            st.success(f"The model predicts that the image shows a **{prediction}** with a confidence of **{confidence:.2f}%**.")
+
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
+
