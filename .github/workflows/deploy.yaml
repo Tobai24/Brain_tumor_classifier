@@ -1,4 +1,4 @@
-name: CI/CD practice
+name: Run Python Script
 
 on:
   push:
@@ -6,17 +6,30 @@ on:
       - main
 
 jobs:
-  build-docker-image:
+  run-python-script:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build Docker image
-        run: |
-          docker build -t my-app:latest ./deployment/fastapi
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
 
-      - name: Test Docker image
+      - name: Install dependencies
         run: |
-          docker run --rm my-app:latest
+          pip install -r requirements.txt
+
+      - name: Run Python script
+        run: |
+          python deployment/fastapi/predict.py
+
+      # - name: Build Docker image
+      #   run: |
+      #     docker build -t my-app:latest ./deployment/fastapi
+
+      # - name: Test Docker image
+      #   run: |
+      #     docker run --rm my-app:latest
